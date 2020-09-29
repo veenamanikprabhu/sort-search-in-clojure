@@ -1,0 +1,21 @@
+# Trying to add travis CI  .... It needs 
+language: clojure
+sudo: required    
+lein: lein
+dist: xenial
+before_script:
+  # Give MongoDB server some time to boot
+  - sleep 15
+  - mongod --version
+  - ./bin/ci/before_script.sh
+script: lein do clean, javac, test
+jdk:
+  - openjdk10
+  - oraclejdk11
+  - openjdk12
+services:
+  - mongodb
+branches:
+  only:
+    - master
+    - 3.5.x-stable
